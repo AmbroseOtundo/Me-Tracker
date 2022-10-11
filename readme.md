@@ -1,0 +1,1 @@
+This is a small app that helps you track you medicine dosage
