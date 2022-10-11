@@ -13,12 +13,9 @@
     <title>Tracker</title>
 </head>
 <body>
-
-
 <nav class="navbar navbar-expand-md navbar-light bg-warning">
 <div class="container">
     <a class="navbar-brand" href="{% url 'index' %}">
-         <img src="{% static 'todo/logo.png' %}" width="30" height="30" class="d-inline-block align-top">
         <span>Tracker</span>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +26,7 @@
         <ul class="navbar-nav mr-auto">
 
                 <li class="nav-item {{ current }}">
-                    <a class="nav-link" href="{% url 'currenttodos' %}">Current</a>
+                    <!-- <a class="nav-link" href="{% url 'loginuser' %}">Current</a> -->
                 </li>
 
         </ul>
@@ -38,7 +35,7 @@
             {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a href="#" onclick="$('#signOutBtn').click()" class="nav-link">Logout</a>
-                    <form style='display: none;' method="POST" action="{% url '' %}">
+                    <form style='display: none;' method="POST" action="{% url 'logout' %}">
                         {% csrf_token %}
                         <button id="signOutBtn" type="submit">Logout</button>
                     </form>
@@ -47,7 +44,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
                 </li>
-                
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'loginuser' %}">Login</a>
+                </li>
             {% endif %}
         </ul>
     </div>
