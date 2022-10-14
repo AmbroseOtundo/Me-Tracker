@@ -1,0 +1,37 @@
+
+{% extends 'Dashboard/base.html' %}
+
+{% block content %}
+
+<div class="column">
+
+{% for dosage_list in dosage_lists %}
+
+    <div class="block">
+      <div class="card">
+        <a href="#">
+          <div class="card-content">
+            <div class="media">
+              <div class="media-left">
+                <figure class="image is-48x48">
+                  <img src="https://bulma.io/images/placeholders/96x96.png"
+                       alt="Placeholder image">
+                </figure>
+              </div>
+              <div class="media-content">
+                <p class="title is-4">
+                        <p>{{ dosage_list.medicine_name }}</p>
+                </p>
+                
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+{% endfor %}
+
+Return <a href="{% url 'homepage' %}">Home</a>
+</div>
+{% endblock content %}

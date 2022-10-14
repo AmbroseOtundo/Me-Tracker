@@ -6,13 +6,14 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
+from .models import Medicine
 
 
 def index(request):
     return render(request, 'Tracker/index.html')
 
 def homepage(request):
-    return render(request, 'Tracker/homepage.html')
+    return render(request, 'Dashboard/base.html')
 
 # Register
 def register_request(request):
@@ -27,7 +28,7 @@ def register_request(request):
                 user.save()
                 login(request, user)
                 messages.success(request, "Sign up succcesful" )
-                return redirect('homepage')
+                return redirect('Dashboard/base.html')
             except IntegrityError:
                 return render(request, 'Tracker/register.html', {'form':UserCreationForm(), 'error':'That username is already taken, please choose another one'})
  
@@ -54,9 +55,15 @@ def loginuser(request):
 	form = AuthenticationForm()
 	return render(request=request, template_name="Tracker/login.html", context={"login_form":form})
 
+
+
 @login_required
 def logout_request(request):
 	logout(request)
 	messages.info(request, "You have successfully logged out.") 
 	return redirect("index")
 
+def my_dosage_list(request):
+    # Getting the medicine object that belongs to the user.
+    dosage_lists = Medicine.objects.exclude(user=request.user)
+    return render(request, "Dashboard/dosage_list.html", {"dosage_lists": dosage_lists})
