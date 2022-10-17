@@ -1,0 +1,25 @@
+{% extends 'layouts/default/page.html' %}
+
+{% load i18n %}
+
+{% block content %}
+
+    {% if request.user.is_authenticated %}
+
+        {% trans 'Welcome' %} <b>{{ request.user.username }}</b>.
+        <h1>Welcome to medicine dosage tracker</h1>
+        <form action="{% url 'index' %}">
+            <label for="fname">First name:</label><br>
+            <input type="text" id="fname" name="fname" value="John"><br>
+            <label for="lname">Last name:</label><br>
+            <input type="text" id="lname" name="lname" value="Doe"><br><br>
+            <input type="submit" value="Submit">
+          </form>
+
+    {% else %}
+
+        {% trans 'Create an account or sign in' %}
+
+    {% endif %}
+
+{% endblock %}
