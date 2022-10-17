@@ -1,5 +1,4 @@
 from datetime import timedelta
-
 from django import forms
 from django.forms import ValidationError
 from django.conf import settings
@@ -7,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.utils import timezone
 from django.db.models import Q
+# A shortcut for translating strings.
 from django.utils.translation import gettext_lazy as _
 
 
@@ -14,6 +14,7 @@ class UserCacheMixin:
     user_cache = None
 
 
+# SignIn is a form that inherits from UserCacheMixin and forms.Form
 class SignIn(UserCacheMixin, forms.Form):
     password = forms.CharField(label=_('Password'), strip=False, widget=forms.PasswordInput)
 
@@ -155,8 +156,14 @@ class ResendActivationCodeForm(UserCacheMixin, forms.Form):
 
 
 class ResendActivationCodeViaEmailForm(UserCacheMixin, forms.Form):
+    # Creating a form field with the label "Email" and the type "EmailField".
     email = forms.EmailField(label=_('Email'))
 
+    """
+        If the user is active, or if the activation code is older than 24 hours, or if the user doesn't
+        exist, then raise an error.
+        :return: The email address that was entered by the user.
+    """
     def clean_email(self):
         email = self.cleaned_data['email']
 
